@@ -1,0 +1,23 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    cairo (1.12.9)
+      pkg-config (>= 1.1.5)
+    cairo-gobject (2.2.0)
+      cairo
+      glib2 (= 2.2.0)
+    clutter (2.2.0)
+      cairo-gobject (= 2.2.0)
+      gobject-introspection (= 2.2.0)
+    glib2 (2.2.0)
+      pkg-config
+    gobject-introspection (2.2.0)
+      glib2 (= 2.2.0)
+    pkg-config (1.1.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  clutter
