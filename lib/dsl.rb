@@ -15,11 +15,13 @@ class Sebastian::DSL
 
   def var(name)
     vars = @@vars
-    puts vars.inspect
     if !vars.nil? and vars.keys.include? name
       vars[name][:value]
     end
   end
+
+  def vars; @@vars; end
+  def vars=(v); @@vars = v; end
 
   class << self
     def display(&block)
@@ -34,7 +36,6 @@ class Sebastian::DSL
         value: default,
         block: block
       }
-      puts @@vars.inspect
     end
   end
 end
