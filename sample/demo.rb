@@ -13,7 +13,7 @@ class SampleConfig < Sebastian::DSL
     text "2 + 2 = #{2 + 2}"
 
     # Asynchronous variable (refreshed independently of update cycles)
-    text "Hourly dice: #{var :dice}"
+    text "Dice of the second: #{var :dice}"
   end
 
   # Asynchronous variable used above. (501: Work in progress.) Synopsis:
@@ -25,7 +25,7 @@ class SampleConfig < Sebastian::DSL
   # The default value will be shown:
   # - before the variable had been computed
   # - if the code block raises an exception
-  var :dice, 60 * 60, "warming up…" do
+  var :dice, 1, "warming up…" do
     "#{Random.rand(6) + 1} and #{Random.rand(6) + 1}"
   end
 end
