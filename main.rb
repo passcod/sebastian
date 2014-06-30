@@ -1,6 +1,7 @@
 require 'bundler'
 Bundler.require :default
 module Sebastian; end
+require './lib/object'
 require './lib/dsl'
 require './lib/scheduler'
 
@@ -43,13 +44,16 @@ def update
   # - Which objects have changed (compare the new value to the clutter
   #   model value) => modify actors.
   # Then, reflow.
-  $config.render.text.each { |t|
-    obj = Clutter::Text.new
-    obj.text = t
-    obj.y = $state[:y]
-    obj.x = $state[:x]
-    $state[:y] += obj.height + $settings[:spacing]
-    $stage.add_child obj
+  $config.render.objects.each { |o|
+    puts o.inspect
+    if o.type == :text
+      obj = Clutter::Text.new
+      obj.text = o.value
+      obj.y = $state[:y]
+      obj.x = $state[:x]
+      $state[:y] += obj.height + $settings[:spacing]
+      $stage.add_child obj
+    end
   }
 end
 

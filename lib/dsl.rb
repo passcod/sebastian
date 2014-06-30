@@ -1,16 +1,19 @@
 class Sebastian::DSL
+  attr_accessor :objects
+
   def initialize
-    @text = []
+    @objects = []
   end
 
   def render
+    @objects = []
+    # This is where the "only change the delta" magic must happen
     instance_eval &@@display
     self
   end
 
-  def text(text = nil)
-    return @text if text.nil?
-    @text.push text
+  def text(text)
+    @objects.push Sebastian::Object.new(type: :text, value: text)
   end
 
   def var(name)
