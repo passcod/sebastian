@@ -1,4 +1,7 @@
 module Sebastian
+  module Plugin
+  end
+
   class Config
     attr_accessor :items, :rate, :stage
 
