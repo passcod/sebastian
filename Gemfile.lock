@@ -19,5 +19,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler
   clutter
