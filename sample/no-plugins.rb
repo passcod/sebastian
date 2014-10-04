@@ -1,4 +1,4 @@
-config = Sebastian::Config.new
+seb = Sebastian.new
 
 date = Sebastian::Item.new do |state, conf|
   blue = Clutter::Color.rgb 0, 0, 255
@@ -14,5 +14,5 @@ date.on_update do |state|
   state[:obj].text = "Today at #{Time.now}"
 end
 
-config.add_item date
-config.start
+seb.add_item date
+seb.start
