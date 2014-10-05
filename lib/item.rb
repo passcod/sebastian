@@ -1,4 +1,6 @@
 class Sebastian::Item
+  attr_reader :state
+  
   def initialize(&block)
     @state ||= {}
     @init = block

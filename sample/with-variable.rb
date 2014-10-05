@@ -5,7 +5,7 @@ datevar = Sebastian::Variable.new do
   Time.now
 end
 
-date = Sebastian::Item::Text.new 10, 10, text: (Proc.new do
+date = Sebastian::Item::Text.new text: (Proc.new do
   "Today at #{datevar.result}"
 end)
 

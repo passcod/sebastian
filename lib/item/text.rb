@@ -1,15 +1,12 @@
-require_relative './positionable.rb'
-class Sebastian::Item::Text < Sebastian::Item::Positionable
-  def initialize(x, y, options = {})
+class Sebastian::Item::Text < Sebastian::Item
+  def initialize(options = {})
     init = Proc.new do |state, conf|
       opt = state[:options]
       obj = Clutter::Text.new(opt[:font], opt[:text], opt[:color])
-      obj.x = state[:x]
-      obj.y = state[:y]
+      state[:actor] = obj
       conf.stage.add_child(obj)
-      state[:obj] = obj
     end
-    super(x, y, &init)
+    super(&init)
 
     @state[:options] = {
       font: 'Sans 12',
@@ -20,7 +17,7 @@ class Sebastian::Item::Text < Sebastian::Item::Positionable
     text = @state[:options][:text]
     if text.is_a? Proc
       text_update do |state, conf|
-        text.call
+        text.call(state, conf)
       end
       @state[:options][:textproc] = text
       @state[:options][:text] = text.call
@@ -29,7 +26,7 @@ class Sebastian::Item::Text < Sebastian::Item::Positionable
 
   def text_update(&block)
     on_update do |state, conf|
-      @state[:obj].text = block.call(state, conf)
+      @state[:actor].text = block.call(state, conf)
     end
   end
 end
