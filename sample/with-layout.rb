@@ -31,5 +31,5 @@ box.add_child here
 box.add_child there
 box.add_child fooooo
 
-seb.add_item box
+seb.add_child box
 seb.start

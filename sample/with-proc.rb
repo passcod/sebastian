@@ -5,5 +5,5 @@ date = Sebastian::Item::Text.new text: (Proc.new do
   "Today at #{Time.now}"
 end)
 
-seb.add_item date
+seb.add_child date
 seb.start

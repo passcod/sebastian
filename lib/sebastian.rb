@@ -3,22 +3,22 @@ class Sebastian
 
   def initialize
     @intervals = {}
-    @items = []
+    @children = []
     @rate = 1000
     
     @stage = Clutter::Stage.new
     @stage.title = 'Sebastian'
     @stage.user_resizable = true
     @stage.signal_connect 'destroy' do
-      @items.each do |item|
-        item.destroy(self)
+      @children.each do |child|
+        child.destroy(self)
       end
       Clutter.main_quit
     end
   end
 
-  def add_item(item)
-    @items.push item
+  def add_child(child)
+    @children.push child
   end
 
   def add_variable(var, rate = nil)
@@ -36,10 +36,10 @@ class Sebastian
   end
 
   def start
-    @items.each { |item| item.init(self) }
+    @children.each { |child| child.init(self) }
     Clutter::Threads.add_timeout(@rate, &Proc.new do
-      @items.each do |item|
-        item.update(self)
+      @children.each do |child|
+        child.update(self)
       end
     end)
     @stage.show

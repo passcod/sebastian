@@ -10,5 +10,5 @@ date = Sebastian::Item::Text.new text: (Proc.new do
 end)
 
 seb.add_variable datevar, 2000
-seb.add_item date
+seb.add_child date
 seb.start
