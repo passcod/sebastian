@@ -5,14 +5,8 @@ class Sebastian::Item::Text < Sebastian::Item
   }.merge(@@defaults)
   
   def initialize(options = {})
-    init = Proc.new do |state, conf|
-      opt = state[:options]
-      obj = Clutter::Text.new(opt[:font], opt[:text], opt[:color])
-      state[:actor] = obj
-      conf.stage.add_child(obj)
-    end
-    super(&init)
-
+    super()
+    
     @state[:options] = {
       font: @@defaults[:text_font],
       text: '',
@@ -26,6 +20,13 @@ class Sebastian::Item::Text < Sebastian::Item
       end
       @state[:options][:textproc] = text
       @state[:options][:text] = text.call
+    end
+
+    on_init do |state, conf|
+      opt = state[:options]
+      obj = Clutter::Text.new(opt[:font], opt[:text], opt[:color])
+      state[:actor] = obj
+      conf.stage.add_child(obj)
     end
   end
 

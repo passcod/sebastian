@@ -4,7 +4,13 @@ class Sebastian::Item::Box < Sebastian::Item
   }.merge(@@defaults)
   
   def initialize
-    init = Proc.new do |state, conf|
+    super()
+
+    @state[:children] = []
+    @state[:height] = 0
+    @state[:spacing] = @@defaults[:box_spacing]
+
+    on_init do |state, conf|
       box = Clutter::Actor.new
       box.layout_manager = Clutter::FixedLayout.new
       #^ I couldn't make other layouts work magically,
@@ -17,11 +23,6 @@ class Sebastian::Item::Box < Sebastian::Item
       state[:actor] = box
       init_children(conf)
     end
-    super(&init)
-
-    @state[:children] = []
-    @state[:height] = 0
-    @state[:spacing] = @@defaults[:box_spacing]
 
     on_update do |state, conf|
       state[:children].each do |child|

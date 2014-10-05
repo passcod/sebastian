@@ -5,28 +5,39 @@ class Sebastian::Item
   
   def initialize(&block)
     @state ||= @@defaults.clone
-    @init = block
-    @update = nil
-    @destroy = nil
+    @inits = []
+    @updates = []
+    @destroys = []
+    on_init(block) if block
+  end
+
+  def on_init(&block)
+    @inits.push block
   end
 
   def on_update(&block)
-    @update = block
+    @updates.push block
   end
 
   def on_destroy(&block)
-    @destroy = block
+    @destroys.push block
   end
 
   def init(config)
-    @init.call(@state, config)
+    @inits.each do |init|
+      init.call(@state, config)
+    end
   end
 
   def update(config)
-    @update.call(@state, config) if @update
+    @updates.each do |update|
+      update.call(@state, config)
+    end
   end
 
   def destroy(config)
-    @destroy.call(@state, config) if @destroy
+    @destroys.each do |destroy|
+      destroy.call(@state, config)
+    end
   end
 end
