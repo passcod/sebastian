@@ -1,8 +1,10 @@
 class Sebastian::Item
   attr_reader :state
+  @@defaults = {}
+  def self.defaults; @@defaults; end
   
   def initialize(&block)
-    @state ||= {}
+    @state ||= @@defaults.clone
     @init = block
     @update = nil
     @destroy = nil

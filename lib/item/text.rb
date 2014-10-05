@@ -1,4 +1,9 @@
-class Sebastian::Item::Text < Sebastian::Item
+class Sebastian::Item::Text < Sebastian::Item  
+  @@defaults = {
+    text_font: 'Mono 12',
+    text_color: Clutter::Color.rgb(0, 0, 0)
+  }.merge(@@defaults)
+  
   def initialize(options = {})
     init = Proc.new do |state, conf|
       opt = state[:options]
@@ -9,9 +14,9 @@ class Sebastian::Item::Text < Sebastian::Item
     super(&init)
 
     @state[:options] = {
-      font: 'Sans 12',
+      font: @@defaults[:text_font],
       text: '',
-      color: Clutter::Color.rgb(0, 0, 0)
+      color: @@defaults[:text_color]
     }.merge(options)
 
     text = @state[:options][:text]

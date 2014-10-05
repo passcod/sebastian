@@ -1,25 +1,27 @@
 class Sebastian::Item::Box < Sebastian::Item
-  def initialize(options = {})
+  @@defaults = {
+    box_spacing: 0
+  }.merge(@@defaults)
+  
+  def initialize
     init = Proc.new do |state, conf|
-      opt = state[:options]
       box = Clutter::Actor.new
+      box.layout_manager = Clutter::FixedLayout.new
+      #^ I couldn't make other layouts work magically,
+      #  so picking this one and managing the visual
+      #  lay of the land ourselves will do fine for now.
+      #  HELPWANTED for anyone who knows how to make
+      #  something like Clutter::FlowLayout work properly.
 
-      box.layout_manager = opt[:layout] || begin
-        layout = Clutter::BoxLayout.new
-        layout.spacing = 20
-        layout.orientation = Clutter::Orientation::VERTICAL
-        layout
-      end
-      
       conf.stage.add_child(box)
       state[:actor] = box
       init_children(conf)
     end
     super(&init)
 
-    @state[:options] = {
-    }.merge(options)
     @state[:children] = []
+    @state[:height] = 0
+    @state[:spacing] = @@defaults[:box_spacing]
 
     on_update do |state, conf|
       state[:children].each do |child|
@@ -46,6 +48,8 @@ class Sebastian::Item::Box < Sebastian::Item
     if @state.member? :actor
       act = child.state[:actor]
       if act.is_a? Clutter::Actor
+        act.y = @state[:height]
+        @state[:height] += act.height + @state[:spacing]
         @state[:actor].add_child(act)
       else
         puts "Expected Clutter::Actor, found #{act.inspect}."
