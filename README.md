@@ -2,6 +2,21 @@
 
 A replacement for Conky.
 
+## Development demo
+
+From the sample config in [sample/api-demo.rb](sample/api-demo.rb):
+
+![Gif of demo](https://humgur.passcod.name/code/sebastian-demo-1.gif)
+
+Run it with:
+
+```bash
+$ git clone git://github.com/passcod/sebastian.git
+$ cd sebastian
+$ bundle
+$ ruby bin.rb sample/api-demo.rb
+```
+
 ## What?
 
 Conky is the greatest system monitor display panel
