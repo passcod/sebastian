@@ -52,7 +52,7 @@ class Sebastian::Main < Sebastian::Item
   def add_variable(var, rate = nil)
     rate ||= @state[:update_rate]
     at_rate = @state[:intervals][rate]
-    if at_rate.nil?
+    if at_rate
       at_rate.push var
     else
       at_rate = [var]
