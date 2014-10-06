@@ -14,24 +14,25 @@ class Sebastian::Item::Text < Sebastian::Item
     }.merge(options)
 
     text = @state[:options][:text]
-    if text.is_a? Proc
-      text_update do |state, main|
-        text.call(state, main)
-      end
-      @state[:options][:textproc] = text
-      @state[:options][:text] = text.call
+    @state[:text] = if text.is_a? Proc
+      text
+    else
+      Proc.new do text end
     end
 
-    on_init do |state|
+    on_init do |state, main|
       opt = state[:options]
-      obj = Clutter::Text.new(opt[:font], opt[:text], opt[:color])
+      obj = Clutter::Text.new(
+        opt[:font], state[:text].call(state, main), opt[:color])
       state[:actor] = obj
+    end
+
+    on_update do |state, main|
+      state[:actor].text = state[:text].call(state, main)
     end
   end
 
   def text_update(&block)
-    on_update do |state, main|
-      @state[:actor].text = block.call(state, main)
-    end
+    @state[:text] = block
   end
 end
