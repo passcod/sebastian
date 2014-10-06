@@ -9,7 +9,9 @@ class Sebastian::Main < Sebastian::Item
     @state[:destroys] = []
     @state[:update_rate] = 1000
 
-    @stage = Clutter::Stage.new
+    @state[:actor] = Clutter::Stage.new
+
+    @stage = @state[:actor]
     @stage.title = 'Sebastian'
     @stage.user_resizable = true
     @stage.signal_connect 'destroy' do
