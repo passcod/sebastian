@@ -23,21 +23,21 @@ class Sebastian::Item
     @destroys.push block
   end
 
-  def init(config)
+  def init(main)
     @inits.each do |init|
-      init.call(@state, config)
+      init.call(@state, main)
     end
   end
 
-  def update(config)
+  def update(main)
     @updates.each do |update|
-      update.call(@state, config)
+      update.call(@state, main)
     end
   end
 
-  def destroy(config)
+  def destroy(main)
     @destroys.each do |destroy|
-      destroy.call(@state, config)
+      destroy.call(@state, main)
     end
   end
 end

@@ -15,14 +15,14 @@ class Sebastian::Item::Text < Sebastian::Item
 
     text = @state[:options][:text]
     if text.is_a? Proc
-      text_update do |state, conf|
-        text.call(state, conf)
+      text_update do |state, main|
+        text.call(state, main)
       end
       @state[:options][:textproc] = text
       @state[:options][:text] = text.call
     end
 
-    on_init do |state, conf|
+    on_init do |state|
       opt = state[:options]
       obj = Clutter::Text.new(opt[:font], opt[:text], opt[:color])
       state[:actor] = obj
@@ -30,8 +30,8 @@ class Sebastian::Item::Text < Sebastian::Item
   end
 
   def text_update(&block)
-    on_update do |state, conf|
-      @state[:actor].text = block.call(state, conf)
+    on_update do |state, main|
+      @state[:actor].text = block.call(state, main)
     end
   end
 end

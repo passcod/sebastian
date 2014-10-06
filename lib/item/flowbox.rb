@@ -11,24 +11,24 @@ class Sebastian::Item::FlowBox < Sebastian::Item
       orientation: @@defaults[:flowbox_orientation]
     }.merge(options)
 
-    on_init do |state, conf|
+    on_init do |state, main|
       box = Clutter::Actor.new
       box.layout_manager = Clutter::FlowLayout.new state[:options][:orientation]
 
       state[:actor] = box
-      init_children(conf)
+      init_children(main)
     end
 
-    on_update do |state, conf|
+    on_update do |state, main|
       state[:children].each do |child|
-        child.update(conf)
+        child.update(main)
       end
     end
   end
 
-  def init_children(conf)
+  def init_children(main)
     @state[:children].each do |child|
-      child.init(conf)
+      child.init(main)
       add_child(child)
     end
   end
