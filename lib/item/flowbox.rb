@@ -1,12 +1,19 @@
 class Sebastian::Item::FlowBox < Sebastian::Item
-  def initialize
+  @@defaults = {
+    flowbox_orientation: Clutter::FlowOrientation::VERTICAL
+  }.merge(@@defaults)
+  
+  def initialize(options = {})
     super()
 
     @state[:children] = []
+    @state[:options] = {
+      orientation: @@defaults[:flowbox_orientation]
+    }.merge(options)
 
     on_init do |state, conf|
       box = Clutter::Actor.new
-      box.layout_manager = Clutter::FlowLayout.new Clutter::FlowOrientation::VERTICAL
+      box.layout_manager = Clutter::FlowLayout.new state[:options][:orientation]
 
       state[:actor] = box
       init_children(conf)
