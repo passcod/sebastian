@@ -1,5 +1,5 @@
 require './lib/item/text.rb'
-require './lib/item/box.rb'
+require './lib/item/flowbox.rb'
 seb = Sebastian.new
 seb.stage.background_color = Clutter::Color.rgb(12, 34, 56)
 #^ The easiest way so far to do anything to the stage
@@ -26,7 +26,7 @@ fooooo.on_init do |state|
   #^ You can also directly manipulate the underlying Clutter actor
 end
 
-box = Sebastian::Item::Box.new
+box = Sebastian::Item::FlowBox.new
 box.add_child here
 box.add_child there
 box.add_child fooooo

@@ -26,7 +26,6 @@ class Sebastian::Item::Text < Sebastian::Item
       opt = state[:options]
       obj = Clutter::Text.new(opt[:font], opt[:text], opt[:color])
       state[:actor] = obj
-      conf.stage.add_child(obj)
     end
   end
 

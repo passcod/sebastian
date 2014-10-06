@@ -36,7 +36,10 @@ class Sebastian
   end
 
   def start
-    @children.each { |child| child.init(self) }
+    @children.each do |child|
+      child.init(self)
+      @stage.add_child(child.state[:actor])
+    end
     Clutter::Threads.add_timeout(@rate, &Proc.new do
       @children.each do |child|
         child.update(self)
