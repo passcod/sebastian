@@ -1,9 +1,10 @@
-class Sebastian
+class Sebastian # < Sebastian::Item ?
   attr_accessor :intervals, :items, :rate, :stage
 
   def initialize
     @intervals = {}
     @children = []
+    @destroys = []
     @rate = 1000
     
     @stage = Clutter::Stage.new
@@ -12,6 +13,9 @@ class Sebastian
     @stage.signal_connect 'destroy' do
       @children.each do |child|
         child.destroy(self)
+      end
+      @destroys.each do |destroy|
+        destroy.call(self)
       end
       Clutter.main_quit
     end
@@ -33,6 +37,10 @@ class Sebastian
         end
       end)
     end
+  end
+
+  def on_destroy(&block)
+    @destroys.push block
   end
 
   def start
